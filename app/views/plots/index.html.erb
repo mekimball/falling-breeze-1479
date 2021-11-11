@@ -1,6 +1,8 @@
 <% @plots.each do |plot| %>
   <p>Plot Number: <%= plot.number %></p>
   <p>Plot <%= plot.number %> Plants: <% plot.plants.each do |plant| %>
-    <%= plant.name %>
+    <div id="id-<%= plot.id %>-<%= plant.id %>"><%= plant.name %>
+    <%= link_to 'Remove plant', "plots/#{plot.id}/edit?plant_id=#{plant.id}" %>
+    </div>
   <% end %>
 <% end %>

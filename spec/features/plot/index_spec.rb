@@ -13,8 +13,7 @@ RSpec.describe 'plot index page', type: :feature do
     @plant3 = @plot1.plants.create!(name: "Plant3", description: "Is yet another plant", days_to_harvest: 110)
 
     @plotplant1 = PlotPlant.create!(plot: @plot2, plant: @plant1)
-    @plotplant2 = PlotPlant.create!(plot: @plot2, plant: @plant2)
-    @plotplant3 = PlotPlant.create!(plot: @plot3, plant: @plant3)
+    @plotplant2 = PlotPlant.create!(plot: @plot3, plant: @plant3)
 
     visit plots_path
   end
@@ -28,14 +27,20 @@ RSpec.describe 'plot index page', type: :feature do
 
     it 'lists plants for each plot' do
       
-      expect(page).to have_content("Plot 1 Plants: Plant1 Plant2 Plant3")
-      expect(page).to have_content("Plot 2 Plants: Plant1 Plant2")
-      expect(page).to have_content("Plot 3 Plants: Plant3")
+      expect(page).to have_content("Plant1 Remove plant")
+      expect(page).to have_content("Plant3 Remove plant")
+    end
+  end
+  describe 'remove plants from plot' do
+    it 'has a link to remove plant' do
+
+      expect(page).to have_content(@plant2.name)
+
+      within("#id-#{@plot1.id}-#{@plant2.id}") do
+        click_link 'Remove plant'
+      end
+      #this is not the best test, but I don't know enough css to test it better
+      expect(page).to_not have_content(@plant2.name) 
     end
   end
 end
-# User Story 1, Plots Index Page
-# As a visitor
-# When I visit the plots index page ('/plots')
-# I see a list of all plot numbers
-# And under each plot number I see names of all that plot's plants
