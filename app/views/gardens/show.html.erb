@@ -1,0 +1,5 @@
+<h1> <%= @garden.name %>'s Page</h1>
+
+<p><%= @garden.name %>'s Plants: <% @garden.all_plants.each do |plant| %>
+  <%= plant %>
+<% end %>

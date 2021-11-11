@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe Garden do
-    before do
+RSpec.describe 'Garden show page' do
+  before do
     @garden1 = Garden.create!(name: "Garden1", organic: true)
     @garden2 = Garden.create!(name: "Garden2", organic: true)
 
@@ -17,15 +17,18 @@ RSpec.describe Garden do
 
     @plotplant1 = PlotPlant.create!(plot: @plot2, plant: @plant1)
     @plotplant2 = PlotPlant.create!(plot: @plot3, plant: @plant3)
-  end
-  describe 'relationships' do
-    it { should have_many(:plots) }
-  end
 
-  describe 'methods' do
-    it '#all_plants' do
-      expect(@garden1.all_plants).to eq([@plant1.name, @plant2.name])
+    visit garden_path(@garden1)
+  end
+  describe 'show page' do
+    it 'returns a unique list of the garden plants' do
+      
+      expect(page).to have_content("#{@garden1.name}'s Plants: #{@plant1.name} #{@plant2.name}")
     end
   end
-
 end
+# As a visitor
+# When I visit an garden's show page
+# Then I see a list of plants that are included in that garden's plots
+# And I see that this list is unique (no duplicate plants)
+# And I see that this list only includes plants that take less than 100 days to harvest
